@@ -57,44 +57,40 @@ namespace CsvReadWrite
         // CSV出力ボタンクリック時の処理
         private void ButtonCsvWrite_Click_1(object sender, EventArgs e)
         {
-            // CSV出力ボタンクリック時の処理
-
+            // ファイルを保存するウィンドウでCSVファイルを選択し、OKボタンをクリックしたとき
+            if (SaveFileDialogCsv.ShowDialog() == DialogResult.OK)
             {
-                // ファイルを保存するウィンドウでCSVファイルを選択し、OKボタンをクリックしたとき
-                if (SaveFileDialogCsv.ShowDialog() == DialogResult.OK)
+                // ファイルを保存するウィンドウで選んだCSVのファイル名をテキストボックスに反映
+                TextBoxOutputCSVFileName.Text = SaveFileDialogCsv.FileName;
+                // header という変数に内部のテーブルのカラム名を設定
+                string[] header = new string[dataTable.Columns.Count];
+                // カラムの数だけループしてカラムのデータを設定
+                for (int i = 0; i < dataTable.Columns.Count; i++)
                 {
-                    // ファイルを保存するウィンドウで選んだCSVのファイル名をテキストボックスに反映
-                    TextBoxOutputCSVFileName.Text = SaveFileDialogCsv.FileName;
-                    // header という変数に内部のテーブルのカラム名を設定
-                    string[] header = new string[dataTable.Columns.Count];
-                    // カラムの数だけループしてカラムのデータを設定
-                    for (int i = 0; i < dataTable.Columns.Count; i++)
-                    {
-                        header[i] = dataTable.Columns[i].ColumnName;
-                    }
-                    // newLineという変数に内部のテーブルを表のイメージ（２次元配列）で設定
-                    string[][] newLine = new string[dataTable.Rows.Count][];
-                    // データの数分ループして、データを取得
-                    for (int i = 0; i < dataTable.Rows.Count; i++)
-                    {
-                        newLine[i] = new string[dataTable.Columns.Count];
-                        // 該当するカラム、列の値を内部のテーブルから、newLineに設定
-                        for (int j = 0; j < dataTable.Columns.Count; j++)
-                        {
-                            // nullの場合は、”” としてnewLineに設定
-                            // newLine[i][j] = (string)dataTable.Rows[i][j] ?? "";    // 修正前コード
-                            newLine[i][j] = (dataTable.Rows[i][j] ?? "").ToString();  // 修正後コード
-                                                                                      // 修正の詳細は、サポートページの正誤表をご参照ください。
-                                                                                      // https://www.shuwasystem.co.jp/support/7980html/6833.html#2
-                        }
-                    }
-                    // データからCSV形式の文字列を生成します
-                    CsvOptions csvOptions = new CsvOptions();
-                    csvOptions.NewLine = "";
-                    string outcsv = CsvWriter.WriteToText(header, newLine, ',');
-                    // FileName という名前で、outcsv の値を保存します。文字は utf-16 でエンコードします。
-                    File.WriteAllText(SaveFileDialogCsv.FileName, outcsv, Encoding.GetEncoding("utf-16"));
+                    header[i] = dataTable.Columns[i].ColumnName;
                 }
+                // newLineという変数に内部のテーブルを表のイメージ（２次元配列）で設定
+                string[][] newLine = new string[dataTable.Rows.Count][];
+                // データの数分ループして、データを取得
+                for (int i = 0; i < dataTable.Rows.Count; i++)
+                {
+                    newLine[i] = new string[dataTable.Columns.Count];
+                    // 該当するカラム、列の値を内部のテーブルから、newLineに設定
+                    for (int j = 0; j < dataTable.Columns.Count; j++)
+                    {
+                        // nullの場合は、”” としてnewLineに設定
+                        // newLine[i][j] = (string)dataTable.Rows[i][j] ?? "";    // 修正前コード
+                        newLine[i][j] = (dataTable.Rows[i][j] ?? "").ToString();  // 修正後コード
+                        // 修正の詳細は、サポートページの正誤表をご参照ください。
+                        // https://www.shuwasystem.co.jp/support/7980html/6833.html#2
+                    }
+                }
+                // データからCSV形式の文字列を生成します
+                CsvOptions csvOptions = new CsvOptions();
+                csvOptions.NewLine = "";
+                string outcsv = CsvWriter.WriteToText(header, newLine, ',');
+                // FileName という名前で、outcsv の値を保存します。文字は utf-16 でエンコードします。
+                File.WriteAllText(SaveFileDialogCsv.FileName, outcsv, Encoding.GetEncoding("utf-16"));
             }
         }
     }
