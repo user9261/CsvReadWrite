@@ -97,7 +97,7 @@
             // 
             // SaveFileDialogCsv
             // 
-            SaveFileDialogCsv.Filter = "CSVファイル|*.CSV|すべてのファイル|*.*";
+            SaveFileDialogCsv.Filter = "CSVファイル|*.csv|すべてのファイル|*.*";
             SaveFileDialogCsv.InitialDirectory = ".\\";
             // 
             // Form1
