@@ -55,7 +55,7 @@ namespace CsvReadWrite
 
 
         // CSV出力ボタンクリック時の処理
-        private void ButtonCsvWrite_Click_1(object sender, EventArgs e)
+        private void ButtonCsvWrite_Click(object sender, EventArgs e)
         {
             // ファイルを保存するウィンドウでCSVファイルを選択し、OKボタンをクリックしたとき
             if (SaveFileDialogCsv.ShowDialog() == DialogResult.OK)

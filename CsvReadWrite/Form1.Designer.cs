@@ -78,7 +78,7 @@
             ButtonCsvWrite.TabIndex = 3;
             ButtonCsvWrite.Text = "CSV出力";
             ButtonCsvWrite.UseVisualStyleBackColor = true;
-            ButtonCsvWrite.Click += ButtonCsvWrite_Click_1;
+            ButtonCsvWrite.Click += ButtonCsvWrite_Click;
             // 
             // DataGridViewCsv
             // 
